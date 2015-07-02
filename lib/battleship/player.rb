@@ -3,9 +3,9 @@ require 'battleship/board'
 class Player
   attr_reader :id, :board
 
-  def initialize id, board
+  def initialize id, params = {}
     @id = id
-    @board = board
+    @board = params[:board] || Board.new
   end
 
   def dead?
