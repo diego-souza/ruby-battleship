@@ -2,8 +2,8 @@ class Board
   attr_reader :size, :ships, :shots
   def initialize params = {}
     @size = 9
-    @ships = []
-    @shots = []
+    @ships = params[:ships] || []
+    @shots = params[:shots] || []
   end
 
   def inside_board? coord
@@ -29,5 +29,9 @@ class Board
       end
     end
     true
+  end
+
+  def sunken_ships
+    @ships.select {|ship| ship.sunk?}
   end
 end

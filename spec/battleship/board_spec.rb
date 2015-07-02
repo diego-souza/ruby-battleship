@@ -10,11 +10,27 @@ describe Board do
     it "has size 9" do
       expect(subject.size).to eq(9)
     end
+
     it "has no ships" do
       expect(subject.ships).to be_empty
     end
+
     it "has no shots" do
       expect(subject.shots).to be_empty
+    end
+
+    it "accepts ships as optional parameter" do
+      ship = double
+      subject = Board.new({ships: [ship]})
+
+      expect(subject.ships).to eq([ship])
+    end
+
+    it "accepts shots as optional parameter" do
+      shot = double
+      subject = Board.new({shots: [shot]})
+
+      expect(subject.shots).to eq([shot])
     end
   end
 
@@ -65,6 +81,24 @@ describe Board do
       expect(subject.inside_board?([10, 0])).to be_falsey
       expect(subject.inside_board?([0, 10])).to be_falsey
       expect(subject.inside_board?([10, 10])).to be_falsey
+    end
+  end
+
+  context "#sunken_ships" do
+    it "has no sunken ships when all ships respond false to sunken?" do
+      ship1 = double(sunk?: false)
+      ship2 = double(sunk?: false)
+      board = Board.new({ships: [ship1, ship2]})
+
+      expect(board.sunken_ships).to be_empty
+    end
+
+    it "has sunken ships when ships respond true to sunken?" do
+      ship1 = double(sunk?: true)
+      ship2 = double(sunk?: false)
+      board = Board.new({ships: [ship1, ship2]})
+
+      expect(board.sunken_ships).to eql([ship1])
     end
   end
 end
