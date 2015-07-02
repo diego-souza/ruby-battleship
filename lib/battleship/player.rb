@@ -1,7 +1,7 @@
 require 'battleship/board'
 
 class Player
-  attr_accessor :id, :board
+  attr_reader :id, :board
 
   def initialize id, board
     @id = id
